@@ -32,6 +32,7 @@ inline string insl(){string n;getline(cin,n);return n;}
 
 inline int string_to_int(string s){int n;stringstream ss;ss << s;ss >> n;return n;}    // Same for double and long long
 inline string int_to_string(int n){string s;stringstream ss;ss << n;ss >> s;return s;} // Same for double and long long
+inline long long string_to_Long_Long(string s){ll res = 0;for(int i = 0 ; i < s.size() ; i++){res = res*10 + (s[i]-'0');}return res;}
 
 typedef vector <int> 	   	 vi;
 typedef pair <int,long long> 	pii;
@@ -85,14 +86,14 @@ int main(){
         graph[v].pb({u,w});
     }
 
-    int source = ini();
+    int source = ini() , destination = ini();
     dijkstra(source);
 
-    if(cost[n]==INT_MAX){
+    if(cost[destination]==INT_MAX){
         cout << "Not Visited From The Given Source" << nl;
     }
     else {
-        stack<int> road = get_road_from(n);
+        stack<int> road = get_road_from(destination);
         while(!road.empty()){
             if(road.size()==1){
                 cout << road.top();

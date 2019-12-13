@@ -38,31 +38,28 @@ inline long long string_to_Long_Long(string s){ll res = 0;for(int i = 0 ; i < s.
 
 
 vector<int>graph[200];
-int parent[200];
 int vis[200] = {0};
-
+int parent[200] = {-1};
 
 void print_Cycle(int head , int s){
     cout << "Cycle : " << s << " ";
     while(head!=s){
         s = parent[s];
         cout << s << " ";
-        if(s == 0)break;
     }
     cout << nl;
 }
-
 
 int Find_Cycle(int u){
     int cycle = 0;
     vis[u] = 1;
     for(int i = 0 ; i < graph[u].size() ; i++){
-        if(cycle)return cycle;
+        if(cycle == 1) return cycle;
         if(vis[graph[u][i]] == 0){
             parent[graph[u][i]] = u;
             cycle = Find_Cycle(graph[u][i]);
         }
-        else if(vis[graph[u][i]] == 1 && parent[u] != graph[u][i]){
+        else if(vis[graph[u][i]] == 1){
             print_Cycle(graph[u][i] , u);
             return 1;
         }
@@ -76,17 +73,19 @@ int main(){
     for(int i = 0 ; i < edgeNum ; i++){
         int u = ini() , v = ini();
         graph[u].pb(v);
-        graph[v].pb(u);
     }
-    int cycle;
+    memset(parent , -1 , sizeof parent);
+    int cycle = 0;
     for(int i = 0 ; i < node ; i++){
-        if(vis[i] == 0){
+        if(vis[i]==0){
             cycle = Find_Cycle(i);
-            if(cycle)break;
+            if(cycle){
+                break;
+            }
         }
     }
     if(cycle) cout << "Cycle Found\n";
-    else cout << "Cycle Not Found\n";
+    else cout << "Cycle Not Found\n" ;
 
 return 0;
 }
